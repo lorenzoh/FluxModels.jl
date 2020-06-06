@@ -1,0 +1,7 @@
+name = "FluxModels"
+uuid = "e26eb721-c8f4-421b-a64f-b383a566ead7"
+authors = ["lorenzoh <lorenz.ohly@gmail.com>"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
