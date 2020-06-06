@@ -1,5 +1,30 @@
 module FluxModels
 
-# Write your package code here.
+using DocStringExtensions
+using Flux
+using Flux: @functor
+using Parameters
+using ModelUtils
 
-end
+abstract type ModuleSpec end
+
+
+include("./activations.jl")
+include("./layers.jl")
+include("./blocks.jl")
+include("./heads.jl")
+
+include("./efficientnet.jl")
+include("./mobilenetv3.jl")
+include("./xresnet.jl")
+
+
+export
+    SqueezeExcitation,
+
+    efficientnetb0,
+    mobilenetv3small,
+    xresnet18,
+    xresnet50
+
+end # module
