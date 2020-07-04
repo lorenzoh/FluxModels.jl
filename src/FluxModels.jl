@@ -23,7 +23,8 @@ export
     SqueezeExcitation,
 
     efficientnetb0,
-    mobilenetv3small,
+    mobilenetv3_small,
+    mobilenetv3_large,
     xresnet18,
     xresnet50
 
