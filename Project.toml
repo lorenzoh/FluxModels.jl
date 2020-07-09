@@ -10,4 +10,5 @@ ModelUtils = "fa899593-fe74-450d-a78c-2ae6a880e080"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 
 [compat]
+Flux = "0.10"
 julia = "1"
