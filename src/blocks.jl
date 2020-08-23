@@ -60,7 +60,7 @@ they are `swish` and `σ`.
     "Activation function to apply after \"squeezing\""
     σ1 = relu
     "Activation function to apply after \"excitation\""
-    σ2 = hardσ
+    σ2 = relu
 end
 function (se::SqueezeExcitation)()
     @unpack k, k_mid, σ1, σ2 = se
@@ -92,7 +92,7 @@ $(TYPEDFIELDS)
     "Number of input kernels"
     k_in::Integer
     "Number of expanded kernels"
-    k_exp::Integer = 6k_in
+    k_out::Integer = 6k_in
     "Activation function to apply after convolution"
     σ = relu
     "Stride of convolution"
@@ -100,18 +100,18 @@ $(TYPEDFIELDS)
 end
 
 function (dws::DepthwiseSeparable)()
-    @unpack ksize, k_in, k_exp, stride = dws
+    @unpack ksize, k_in, k_out, stride = dws
     return Chain(
-        Conv((1, 1), k_in => k_exp),
-        BatchNorm(k_exp, σ),
+        Conv((1, 1), k_in => k_out),
+        BatchNorm(k_out, σ),
 
         DepthwiseConv(
             (ksize, ksize),
-            k_exp => k_exp;
+            k_out => k_out;
             pad = ksize ÷ 2,
             stride = stride
         ),
-        BatchNorm(k_exp, σ)
+        BatchNorm(k_out, σ)
     )
 end
 

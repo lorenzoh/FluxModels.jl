@@ -7,13 +7,13 @@
 end
 
 function (mbnv3::MobileNetV3)()
-    head = ConvBlock(ksize = 3, k_in = 3, k_out = 16; σ = hswish, stride = 2)()
+    head = ConvBlock(ksize = 3, k_in = 3, k_out = 16; σ = relu, stride = 2)()
 
     return Chain(
         head,
         [stage() for stage in mbnv3.stages]...,
         Conv((1, 1), mbnv3.stages[end].k_out => mbnv3.k_out),
-        BatchNorm(mbnv3.k_out, hswish)
+        BatchNorm(mbnv3.k_out, relu)
     )
 
 end
@@ -40,7 +40,7 @@ end
 function (head::MobileNetV3Head)()
     return Chain(
         GlobalMeanPool(),
-        Conv((1, 1), head.k_in => head.k_mid, hswish),
+        Conv((1, 1), head.k_in => head.k_mid, relu),
         Conv((1, 1), head.k_mid => head.n_classes),
         flatten
     )
@@ -64,21 +64,21 @@ function mobilenetv3_small(usedepthwise = false)
         MBConv(ksize = 3, k_in = 24, k_exp = 88, k_out = 24,
             σ = relu, has_se = false, stride = 1, convblock = cb),
         MBConv(ksize = 5, k_in = 24, k_exp = 96, k_out = 40,
-            σ = hswish, has_se = true, stride = 2, convblock = cb),
+            σ = relu, has_se = true, stride = 2, convblock = cb),
         MBConv(ksize = 5, k_in = 40, k_exp = 240, k_out = 40,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
         MBConv(ksize = 5, k_in = 40, k_exp = 240, k_out = 40,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
         MBConv(ksize = 5, k_in = 40, k_exp = 120, k_out = 48,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
         MBConv(ksize = 5, k_in = 48, k_exp = 144, k_out = 48,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
         MBConv(ksize = 5, k_in = 48, k_exp = 288, k_out = 96,
-            σ = hswish, has_se = true, stride = 2, convblock = cb),
+            σ = relu, has_se = true, stride = 2, convblock = cb),
         MBConv(ksize = 5, k_in = 96, k_exp = 576, k_out = 96,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
         MBConv(ksize = 5, k_in = 96, k_exp = 576, k_out = 96,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
     ], 576)
 
     return mbvn3()
@@ -109,24 +109,24 @@ function mobilenetv3_large(usedepthwise = false)
             σ = relu, has_se = true, stride = 1, convblock = cb),
 
         MBConv(ksize = 3, k_in = 40, k_exp = 240, k_out = 80,
-            σ = hswish, has_se = false, stride = 2, convblock = cb),
+            σ = relu, has_se = false, stride = 2, convblock = cb),
         MBConv(ksize = 3, k_in = 80, k_exp = 200, k_out = 80,
-            σ = hswish, has_se = false, stride = 1, convblock = cb),
+            σ = relu, has_se = false, stride = 1, convblock = cb),
         MBConv(ksize = 3, k_in = 80, k_exp = 184, k_out = 80,
-            σ = hswish, has_se = false, stride = 1, convblock = cb),
+            σ = relu, has_se = false, stride = 1, convblock = cb),
         MBConv(ksize = 3, k_in = 80, k_exp = 184, k_out = 80,
-            σ = hswish, has_se = false, stride = 1, convblock = cb),
+            σ = relu, has_se = false, stride = 1, convblock = cb),
         MBConv(ksize = 3, k_in = 80, k_exp = 480, k_out = 112,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
         MBConv(ksize = 3, k_in = 112, k_exp = 672, k_out = 112,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
 
         MBConv(ksize = 5, k_in = 112, k_exp = 672, k_out = 160,
-            σ = hswish, has_se = true, stride = 2, convblock = cb),
+            σ = relu, has_se = true, stride = 2, convblock = cb),
         MBConv(ksize = 5, k_in = 160, k_exp = 960, k_out = 160,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
         MBConv(ksize = 5, k_in = 160, k_exp = 960, k_out = 160,
-            σ = hswish, has_se = true, stride = 1, convblock = cb),
+            σ = relu, has_se = true, stride = 1, convblock = cb),
     ], 960)
 
     return mbvn3()
