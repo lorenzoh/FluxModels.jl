@@ -8,6 +8,8 @@ using ModelUtils
 
 abstract type ModuleSpec end
 
+include("./OutputSizes.jl")
+using .OutputSizes
 
 include("./activations.jl")
 include("./layers.jl")
@@ -20,6 +22,7 @@ include("./xresnet.jl")
 
 
 export
+    outputsize,
     SqueezeExcitation,
 
     efficientnetb0,

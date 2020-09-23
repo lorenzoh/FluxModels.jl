@@ -6,6 +6,7 @@ version = "0.1.0"
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 ModelUtils = "fa899593-fe74-450d-a78c-2ae6a880e080"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 
