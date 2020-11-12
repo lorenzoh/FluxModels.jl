@@ -24,6 +24,7 @@ include("./xresnet.jl")
 export
     outputsize,
     SqueezeExcitation,
+    PixelShuffle,
 
     efficientnetb0,
     mobilenetv3_small,
