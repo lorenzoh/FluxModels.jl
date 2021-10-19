@@ -2,7 +2,8 @@
 
 act_fn = relu
 
-convx(ni, nf; ks=3, stride=1) = Conv((ks, ks), ni => nf, stride = stride, pad = ks ÷ 2)
+convx(ni, nf; ks=3, stride=1) = Conv(
+        (ks, ks), ni => nf, stride = stride, pad = ks ÷ 2, init = Flux.kaiming_normal)
 
 function conv_layer(ni, nf; ks=3, stride=1, zero_bn=false, act=true)
     bn = BatchNorm(nf, act ? act_fn : identity)
@@ -83,8 +84,5 @@ end
 
 function xresnet50(;init = true, kwargs...)
     model = XResNet(4, [3, 4, 6, 3]; kwargs...)
-    if init
-        initmodel!(model, XRESNET_INITS)
-    end
     return model
 end
